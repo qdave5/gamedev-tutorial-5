@@ -272,3 +272,20 @@ func increase_curr_texture_index():
 ```
 
 Ketika pemain menekan key "F", `Sprite` dari `Player` akan digantikan dengan _texture_ berikutnya pada list.
+
+---
+
+# Restart Position
+
+Reference: (position in center of screen)[https://forum.godotengine.org/t/position-in-center-of-screen/20171]
+
+Sebelumnya menambahkan Input Map baru `"ui_restart"` dengan _key_ `"R"`. Implementasi dari _`restart position`_ adalah sebagai berikut.
+
+```
+func _process(delta):
+	//
+	if Input.is_action_just_pressed("ui_restart"):
+		position = get_parent().get_viewport_rect().size / 2.0
+```
+
+Var `position` dari `Player` akan terupdate dengan posisi tepat di tengah layar game ketika pemain menekan tombol `Restart`.

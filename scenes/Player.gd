@@ -90,6 +90,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_interact"):
 		increase_curr_texture_index()
 		player_sprite.texture = texture_list[curr_texture_index]
+	if Input.is_action_just_pressed("ui_restart"):
+		position = get_parent().get_viewport_rect().size / 2.0
 
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY

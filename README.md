@@ -208,3 +208,45 @@ func update_animation():
 			animation_player.play("jump_down")
   //
 ```
+
+---
+
+# Change Sprite Texture
+
+Reference: [How to change the image/texture of a sprite when it enters a specific area](https://forum.godotengine.org/t/how-to-change-the-image-texture-of-a-sprite-when-it-enters-a-specific-area/3590)
+
+Sebelumnya menambahkan Input Map baru `"ui_interact"` dengan _key_ `"F"`. Untuk menyediakan texture yang akan digunakan, inisiasi dengan fungsi `preload`.
+
+```
+var curr_texture_index = 0
+var texture_list = [
+  preload("res://assets/kenney_platformercharacters/PNG/Adventurer/adventurer_tilesheet.png"),
+	preload("res://assets/kenney_platformercharacters/PNG/Female/female_tilesheet.png"),
+	preload("res://assets/kenney_platformercharacters/PNG/Player/player_tilesheet.png"),
+	preload("res://assets/kenney_platformercharacters/PNG/Soldier/soldier_tilesheet.png"),
+	preload("res://assets/kenney_platformercharacters/PNG/Zombie/zombie_tilesheet.png"),
+]
+```
+
+Texture yang akan diguanakan adalah semua _tilesheet_ yang telah disediakan untuk project, yaitu Adventurer, Female, Player, Soldier, dan Zombie. Kemudian var `player_sprite` akan diinstansiasi untuk memanggil _node_ `Sprite` yang akan diupdate atribut `texture`nya.
+
+```
+onready var player_sprite = get_node("Sprite")
+```
+
+Untuk mengubah texture, perlu update atribut `texture` pada `player_sprite`. Implementasi yang dilakukan adalah dengan mengupdate nilai `curr_texture_index` yang dapat dibatasi dengan jumlah dari `texture_list` sehingga dapat ditambahkan texture lainnya selama masih sesuai dengan _frame_ dari `Sprite`.
+
+```
+func _process(delta):
+	//
+	if Input.is_action_just_pressed("ui_interact"):
+		increase_curr_texture_index()
+		player_sprite.texture = texture_list[curr_texture_index]
+
+func increase_curr_texture_index():
+	curr_texture_index += 1
+	if curr_texture_index >= texture_list.size():
+		curr_texture_index = 0
+```
+
+Ketika pemain menekan key "F", `Sprite` dari `Player` akan digantikan dengan _texture_ berikutnya pada list.

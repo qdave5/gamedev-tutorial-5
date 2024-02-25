@@ -4,6 +4,16 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+var curr_texture_index = 0
+var texture_list = [
+	preload("res://assets/kenney_platformercharacters/PNG/Adventurer/adventurer_tilesheet.png"),
+	preload("res://assets/kenney_platformercharacters/PNG/Female/female_tilesheet.png"),
+	preload("res://assets/kenney_platformercharacters/PNG/Player/player_tilesheet.png"),
+	preload("res://assets/kenney_platformercharacters/PNG/Soldier/soldier_tilesheet.png"),
+	preload("res://assets/kenney_platformercharacters/PNG/Zombie/zombie_tilesheet.png"),
+]
+
+onready var player_sprite = get_node("Sprite")
 
 export (int) var speed = 400
 export (int) var jump_speed = -600
@@ -68,17 +78,25 @@ func update_animation():
 		animation_player.play("dash")
 	
 	if Input.is_action_pressed("ui_right"):
-		$Sprite.flip_h = false
+		player_sprite.flip_h = false
 	elif Input.is_action_pressed("ui_left"):
-		$Sprite.flip_h = true
+		player_sprite.flip_h = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	direction = Input.get_vector("ui_left","ui_right","ui_up","ui_down").normalized()
 	update_animation()
+	
+	if Input.is_action_just_pressed("ui_interact"):
+		increase_curr_texture_index()
+		player_sprite.texture = texture_list[curr_texture_index]
 
 func _physics_process(delta):
 	velocity.y += delta * GRAVITY
 	get_input()
 	velocity = move_and_slide(velocity, UP)
 
+func increase_curr_texture_index():
+	curr_texture_index += 1
+	if curr_texture_index >= texture_list.size():
+		curr_texture_index = 0

@@ -6,7 +6,7 @@
 [node name="Root" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 487, 136 )
+position = Vector2( 500, 175 )
 
 [node name="Ground" parent="." instance=ExtResource( 1 )]
 position = Vector2( 507.708, 363.86 )
@@ -16,3 +16,8 @@ position = Vector2( 789.149, 294.054 )
 
 [node name="Ground3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 225.95, 294.562 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 340.0
+margin_bottom = 40.0
+text = "Press \"F\" to change Player texture."

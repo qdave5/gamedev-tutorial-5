@@ -93,4 +93,89 @@ Sebagai penanda `Player` _crouching_, digunakan _frame_ dari gambar yg telah dis
 
 Berdasarkan gambar yang disediakan, _frame_ 3 merupakan _frame_ jongkok. _Frame_ akan diganti ke 3 ketika pemain menekan tombol _down_ dan dikembalikan ke frame semula ketika pemain melepas tombol _down_. Pergantian ini terjadi ketika `Player` menyentuh lantai sebagai kondisi awal dari _crouching_.
 
-## Animation (On Going)
+## Animation
+
+Reference : [Learn How To Use The Godot Animation Player In Less Than 5 Minutes](https://www.youtube.com/watch?v=ATfE4k6EP9U&t=58s)
+
+Implementasi menggunakan `AnimationPlayer` untuk menyimpan animasi dari `Sprite` yang digunakan. Animasi yang dibuat adalah
+
+-   idle
+-   walk
+-   jump
+-   crouch
+-   dash
+
+Dari _script_, `AnimationPlayer` dapat dipanggil dengan fungsi `.play()` untuk menjalankan animasi yang diinginkan. Namun sebelum itu, _node_ perlu dipanggil pada _script_.
+
+```
+onready var animation_player = get_node("AnimationPlayer")
+```
+
+Kode diatas akan menginisiasi var `animation_player` ketika _node_ `Player` sudah _ready_.
+
+Selain var `animation_player`, akan diambil var `direction` untuk menghandle perubahan arah tampilan `Sprite`.
+
+```
+var direction : Vector2 = Vector2.ZERO # for animation
+
+func _process(delta):
+	direction = Input.get_vector("ui_left","ui_right","ui_up","ui_down").normalized()
+```
+
+Var `direction` akan selalu terupdate setiap frame dengan vector dari _input_ yang diberikan oleh pemain. Fungsi [get_vector](https://docs.godotengine.org/en/3.5/classes/class_input.html#methods) akan menerima atribut (String negative_x, String positive_x, String negative_y, String positive_y, float deadzone=-1.0) yang kemudian akan mengembalikan nilai `Vector2` dari input yang diberikan.
+
+Untuk implementasi update animasi, dapat dilihat pada kode di bawah.
+
+```
+func update_animation():
+	if is_on_floor():
+		if Input.is_action_pressed("ui_crouch"):
+			animation_player.play("crouch")
+		elif direction != Vector2.ZERO:
+			animation_player.play("walk")
+		else:
+			animation_player.play("idle")
+	else:
+		animation_player.play("jump")
+
+	if Input.is_action_pressed("ui_dash") and direction != Vector2.ZERO:
+		animation_player.play("dash")
+
+	if Input.is_action_pressed("ui_right"):
+		$Sprite.flip_h = false
+	elif Input.is_action_pressed("ui_left"):
+		$Sprite.flip_h = true
+```
+
+Penulisan kode sudah disesuaikan dengan kondisi dari dijalankannya suatu animasi. Untuk menjalankan animasi, digunakan `animation_player(<nama_animasi>)`.
+
+Sehingga hasil akhir dari implementasi animasi adalah sebagai berikut.
+
+```
+var direction : Vector2 = Vector2.ZERO # for animation
+
+onready var animation_player = get_node("AnimationPlayer")
+
+func _process(delta):
+	direction = Input.get_vector("ui_left","ui_right","ui_up","ui_down").normalized()
+	update_animation()
+
+func update_animation():
+	if is_on_floor():
+		if Input.is_action_pressed("ui_crouch"):
+			animation_player.play("crouch")
+		elif direction != Vector2.ZERO:
+			animation_player.play("walk")
+		else:
+			animation_player.play("idle")
+	else:
+		animation_player.play("jump")
+
+	if Input.is_action_pressed("ui_dash") and direction != Vector2.ZERO:
+		animation_player.play("dash")
+
+	if Input.is_action_pressed("ui_right"):
+		$Sprite.flip_h = false
+	elif Input.is_action_pressed("ui_left"):
+		$Sprite.flip_h = true
+```

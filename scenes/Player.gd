@@ -23,6 +23,8 @@ const UP = Vector2(0,-1)
 var velocity = Vector2()
 var direction : Vector2 = Vector2.ZERO # for animation
 
+onready var animation_player = get_node("AnimationPlayer")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -32,33 +34,47 @@ func get_input():
 	if is_on_floor():
 		can_double_jump = true
 		if Input.is_action_pressed("ui_crouch"):
-			$Sprite.frame = 3
 			speed = 200
 		else:
-			$Sprite.frame = 0
 			speed = 400
+	if Input.is_action_pressed("ui_right"):
+		velocity.x += speed
+	if Input.is_action_pressed("ui_left"):
+		velocity.x -= speed
 	if Input.is_action_just_pressed("ui_up"):
 		if is_on_floor():
 			velocity.y = jump_speed
 		elif can_double_jump:
 			velocity.y = jump_speed
 			can_double_jump = false
-	if Input.is_action_pressed("ui_right"):
-		$Sprite.flip_h = false
-		velocity.x += speed
-	if Input.is_action_pressed("ui_left"):
-		$Sprite.flip_h = true
-		velocity.x -= speed
 	if Input.is_action_pressed("ui_dash"):
 		velocity.x *= dash_multiplier
 
+func update_animation():
+	if is_on_floor():
+		if Input.is_action_pressed("ui_crouch"):
+			animation_player.play("crouch")
+		elif direction != Vector2.ZERO:
+			animation_player.play("walk")
+		else:
+			animation_player.play("idle")
+	else:
+		animation_player.play("jump")
+	
+	if Input.is_action_pressed("ui_dash") and direction != Vector2.ZERO:
+		animation_player.play("dash")
+	
+	if Input.is_action_pressed("ui_right"):
+		$Sprite.flip_h = false
+	elif Input.is_action_pressed("ui_left"):
+		$Sprite.flip_h = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	direction = Input.get_vector("ui_left","ui_right","ui_up","ui_down").normalized()
+	update_animation()
 
 func _physics_process(delta):
-	direction = Input.get_vector("ui_left","ui_right","ui_up","ui_down").normalized()
 	velocity.y += delta * GRAVITY
 	get_input()
 	velocity = move_and_slide(velocity, UP)

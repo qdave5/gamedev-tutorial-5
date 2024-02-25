@@ -289,3 +289,18 @@ func _process(delta):
 ```
 
 Var `position` dari `Player` akan terupdate dengan posisi tepat di tengah layar game ketika pemain menekan tombol `Restart`.
+
+## Update: Refactor Implementasi Fitur
+
+Implementasi fitur `restart position` dipindahkan ke _script_ `Main.gd`. Alasannya adalah sebelumnya pada `Player.gd`, dilakukan pemanggilan `get_parent()` untuk mengambil _node_ parentnya yang kemudian dilanjutkan dengan pengambilan `get_viewport_rect().size`. Implementasi ini tidak fleksibel karena posisi hanya dapat diubah ke tengah _screen_. Dengan dipindahkannya ke `Main.gd` memungkinkan posisi reset `Player` berbeda untuk setiap level yang ditempatinya.
+
+Implementasi yang baru pada file `Main.gd` adalah sebagai berikut.
+
+```
+func _process(delta):
+	if Input.is_action_just_pressed("ui_restart"):
+		reset_player_position()
+
+func reset_player_position():
+	player.position = get_viewport_rect().size / 2.0
+```

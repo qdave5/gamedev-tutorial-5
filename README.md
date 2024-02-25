@@ -97,6 +97,8 @@ Berdasarkan gambar yang disediakan, _frame_ 3 merupakan _frame_ jongkok. _Frame_
 
 Reference : [Learn How To Use The Godot Animation Player In Less Than 5 Minutes](https://www.youtube.com/watch?v=ATfE4k6EP9U&t=58s)
 
+### Implementasi Animation
+
 Implementasi menggunakan `AnimationPlayer` untuk menyimpan animasi dari `Sprite` yang digunakan. Animasi yang dibuat adalah
 
 -   idle
@@ -178,4 +180,31 @@ func update_animation():
 		$Sprite.flip_h = false
 	elif Input.is_action_pressed("ui_left"):
 		$Sprite.flip_h = true
+```
+
+### Update: implementasi jump
+
+Animasi `jump` diimplementasi menjadi dua jenis animasi, `jump_up` dan `jump_down`. Animasi dibedakan untuk membuatnya lebih detail. Sehingga tidak hanya animasi `jump` saja, namun juga dapat digunakan sebagai animasi `fall`.
+
+**Before:**
+
+```
+func update_animation():
+  //
+  else:
+    animation_player.play("jump")
+  //
+```
+
+**After:**
+
+```
+func update_animation():
+  //
+  else:
+    if velocity.y < 0:
+			animation_player.play("jump_up")
+		else:
+			animation_player.play("jump_down")
+  //
 ```

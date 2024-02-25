@@ -209,6 +209,28 @@ func update_animation():
   //
 ```
 
+## Update: Fix Dash Animation
+
+**Before:**
+
+```
+func update_animation():
+  if Input.is_action_pressed("ui_dash") and direction != Vector2.ZERO:
+		animation_player.play("dash")
+```
+
+Fungsi di atas merupakan fungsi untuk menjalankan animasi `dash`. Namun, `dash` dapat dijalankan dengan menekan tombol `dash` + `crouch` secara bersamaan, dimana seharusnya yang dijalankan tetaplah animasi `crouch`.
+
+Maka dari itu, dilakukan sedikit perubahan pada _if conditional_ sehingga animasi `dash` hanya dilakukan ketika `direction.x`nya tidak nol dan tidak ketika `direction.y` tidak nol (sedang `crouch`).
+
+**After:**
+
+```
+func update_animation():
+  if Input.is_action_pressed("ui_dash") and direction.x != 0:
+		animation_player.play("dash")
+```
+
 ---
 
 # Change Sprite Texture

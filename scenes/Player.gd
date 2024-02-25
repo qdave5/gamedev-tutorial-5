@@ -74,7 +74,7 @@ func update_animation():
 		else:
 			animation_player.play("jump_down")
 	
-	if Input.is_action_pressed("ui_dash") and direction != Vector2.ZERO:
+	if Input.is_action_pressed("ui_dash") and direction.x != 0:
 		animation_player.play("dash")
 	
 	if Input.is_action_pressed("ui_right"):

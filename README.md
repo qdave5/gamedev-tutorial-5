@@ -10,10 +10,14 @@ Source : https://github.com/CSUI-Game-Development/tutorial-3-template
 
 Sebagai bagian dari latihan mandiri, kamu diminta untuk praktik mengembangkan lebih lanjut mekanika pergerakan karakter di game platformer. Beberapa ide fitur lanjutan terkait pergerakan karakter di game platformer:
 
-[x] Double jump - karakter pemain bisa melakukan aksi loncat sebanyak dua kali.
-[x] Dashing - karakter pemain dapat bergerak lebih cepat dari kecepatan biasa secara sementara ketika pemain menekan tombol arah sebanyak dua kali.
-[x] Crouching - karakter pemain dapat jongkok dimana sprite-nya terlihat lebih kecil (misal: sprite karakter manusianya terlihat berjongkok) dan kecepatan pergerakannya menjadi lebih lambat ketika lagi jongkok
-[ ] Dan lain-lain. Silakan cari contoh mekanika pergerakan 2D lainnya yang mungkin diimplementasikan di dalam permainan tipe platformer.
+- [x] Double jump - karakter pemain bisa melakukan aksi loncat sebanyak dua kali.
+- [x] Dashing - karakter pemain dapat bergerak lebih cepat dari kecepatan biasa secara sementara ketika pemain menekan tombol arah sebanyak dua kali.
+- [x] Crouching - karakter pemain dapat jongkok dimana sprite-nya terlihat lebih kecil (misal: sprite karakter manusianya terlihat berjongkok) dan kecepatan pergerakannya menjadi lebih lambat ketika lagi jongkok
+- [x] Other Function
+    - [x] Animation - karakter pemain dapat menunjukkan animasi yang berbeda berdasarkan aksi yang dilakukan
+    - [x] Change Texture - tampilan tekstur dari karakter pemain dapat diubah menjadi tekstur lain yang telah disediakan
+    - [x] Reset Position - posisi karakter pemain dapat dikembalikan ke posisi semula
+- [ ] Dan lain-lain. Silakan cari contoh mekanika pergerakan 2D lainnya yang mungkin diimplementasikan di dalam permainan tipe platformer.
 
 Silakan pilih fitur lanjutan yang ingin dikerjakan. Kemudian jelaskan proses pengerjaannya di dalam sebuah dokumen teks README.md. Cantumkan juga referensi-referensi yang digunakan sebagai acuan ketika menjelaskan proses implementasi.
 

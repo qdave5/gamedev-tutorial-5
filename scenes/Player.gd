@@ -4,8 +4,8 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var curr_texture_index = 0
-var texture_list = [
+var curr_texture_index : int = 0
+var texture_list : Array = [
 	preload("res://assets/kenney_platformercharacters/PNG/Adventurer/adventurer_tilesheet.png"),
 	preload("res://assets/kenney_platformercharacters/PNG/Female/female_tilesheet.png"),
 	preload("res://assets/kenney_platformercharacters/PNG/Player/player_tilesheet.png"),
@@ -13,26 +13,20 @@ var texture_list = [
 	preload("res://assets/kenney_platformercharacters/PNG/Zombie/zombie_tilesheet.png"),
 ]
 
-export (int) var speed = 400
-export (int) var jump_speed = -600
-export (int) var dash_multiplier = 2
-export (int) var GRAVITY = 1200
+var speed : int = 400
+var jump_speed : int = -600
+var dash_multiplier : int = 2
+var GRAVITY : int = 1200
 
-export (bool) var can_double_jump = true
-
-const IDLE = 'idle'
-const IS_MOVING = 'is_moving'
-const IS_CROUCHING = 'is_crouching'
-const DASH = 'dash'
-const JUMP = 'jump'
+var can_double_jump : bool = true
 
 const UP = Vector2(0,-1)
 
-var velocity = Vector2()
+var velocity : Vector2 = Vector2()
 var direction : Vector2 = Vector2.ZERO # for animation
 
-var player_sprite
-var animation_player
+var player_sprite : Node2D
+var animation_player : AnimationPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -7,20 +7,25 @@
 [node name="Root" type="Node2D"]
 script = ExtResource( 3 )
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 512, 175 )
-
-[node name="Ground" parent="." instance=ExtResource( 1 )]
-position = Vector2( 507.708, 363.86 )
-
-[node name="Ground2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 789.149, 294.054 )
-
-[node name="Ground3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 225.95, 294.562 )
-
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_right = 340.0
-margin_bottom = 40.0
+margin_left = -451.0
+margin_top = -69.0
+margin_right = -111.0
+margin_bottom = -29.0
 text = "Press \"F\" to change Player texture.
 Press \"R\" to restart Player position."
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 4.04999, -72 )
+
+[node name="Ground" parent="." instance=ExtResource( 1 )]
+position = Vector2( -0.242004, 116.86 )
+
+[node name="Ground2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 281.199, 47.054 )
+
+[node name="Ground3" parent="." instance=ExtResource( 1 )]
+position = Vector2( -282, 47.562 )

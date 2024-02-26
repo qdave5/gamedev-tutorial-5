@@ -14,10 +14,6 @@ config/name="Tutorial 3 Template"
 run/main_scene="res://scenes/Main.tscn"
 config/icon="res://icon.png"
 
-[display]
-
-window/stretch/mode="viewport"
-
 [global]
 
 key=false

@@ -13,8 +13,6 @@ var texture_list = [
 	preload("res://assets/kenney_platformercharacters/PNG/Zombie/zombie_tilesheet.png"),
 ]
 
-onready var player_sprite = get_node("Sprite")
-
 export (int) var speed = 400
 export (int) var jump_speed = -600
 export (int) var dash_multiplier = 2
@@ -33,11 +31,13 @@ const UP = Vector2(0,-1)
 var velocity = Vector2()
 var direction : Vector2 = Vector2.ZERO # for animation
 
-onready var animation_player = get_node("AnimationPlayer")
+var player_sprite
+var animation_player
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	player_sprite = get_node("Sprite")
+	animation_player = get_node("AnimationPlayer")
 
 func get_input():
 	velocity.x = 0

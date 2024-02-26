@@ -361,3 +361,7 @@ var player : Node2D
 func _ready():
 	player = get_node("Player")
 ```
+
+## Last Update's Note
+
+Doesn't seem to be working

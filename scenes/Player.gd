@@ -25,6 +25,8 @@ const UP = Vector2(0,-1)
 var velocity : Vector2 = Vector2()
 var direction : Vector2 = Vector2.ZERO # for animation
 
+var animation : String = "idle"
+
 var player_sprite : Node2D
 var animation_player : AnimationPlayer
 
@@ -57,24 +59,27 @@ func get_input():
 func update_animation():
 	if is_on_floor():
 		if Input.is_action_pressed("ui_crouch"):
-			animation_player.play("crouch")
+			animation = "crouch"
 		elif direction != Vector2.ZERO:
-			animation_player.play("walk")
+			animation = "walk"
 		else:
-			animation_player.play("idle")
+			animation = "idle"
 	else:
 		if velocity.y < 0:
-			animation_player.play("jump_up")
+			animation = "jump_up"
 		else:
-			animation_player.play("jump_down")
+			animation = "jump_down"
 	
 	if Input.is_action_pressed("ui_dash") and direction.x != 0:
-		animation_player.play("dash")
+		animation = "dash"
 	
 	if Input.is_action_pressed("ui_right"):
 		player_sprite.flip_h = false
 	elif Input.is_action_pressed("ui_left"):
 		player_sprite.flip_h = true
+		
+	if animation_player.current_animation != animation:
+		animation_player.play(animation)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

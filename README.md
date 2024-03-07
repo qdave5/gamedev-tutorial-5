@@ -407,9 +407,16 @@ func update_animation():
 		animation_player.play(animation)
 ```
 
-## TODO
+## Penggunaan `AnimationSprite`
 
-update `Sprite` to `AnimationSprite`
+Setelah dilakukan percobaan pembuatan `AnimationSprite`, dikarenakan implementasi pada tutorial-3 sebelumnya ada pergantian pemain, implementasi `AnimationSprite` cukup memakan banyak waktu dan usaha pada satu `AnimationSprite` yang sama.
+Meski memindahkan untuk satu karakter satu _scene_, hal ini tidak efektif dikarenakan `AnimationSprite`, atau lebih tepatnya `SpritesFrames` tidak begitu sederhana untuk menanganinya.
+Untuk _workaround_ permasalahan ini dapat mengikuti [solusi berikut](https://stackoverflow.com/questions/70139487/how-to-change-the-texture-of-animatedsprite-programatically).
+Namun ada baiknya me*expend* `AnimationPlayer` yang sudah dibuat sebelumnya.
+
+Berdasarkan observasi dari pengerjaan **tutorial-5** ini, `AnimationSprite` berfokus kepada animasi `Sprite` yang sudah ditentukan sebelumnya dengan jarak antar _frame_ yang fixed, sehingga `AnimationSprite` sangat cocok untuk digunakan pada karakter bermodel _pixelart_.
+Namun, `AnimationPlayer` + `Sprite` dapat melakukan yang serupa, bahkan lebih dari situ.
+`AnimationPlayer` tidak hanya menentukan perubahan animasi _frame_ karakter, namun beberapa perubahan lain, seperti `position`, `scale`, `modulate`, bahkan hingga `function` (seperti `queue_free()`) yang beberapa telah dilakukan pada **tutorial-4**.
 
 ---
 

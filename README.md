@@ -8,7 +8,9 @@ Godot version : 3.5
 
 ---
 
-# Latihan Mandiri: Eksplorasi Mekanika Pergerakan
+# Tutorial 3
+
+## Latihan Mandiri: Eksplorasi Mekanika Pergerakan
 
 Sebagai bagian dari latihan mandiri, kamu diminta untuk praktik mengembangkan lebih lanjut mekanika pergerakan karakter di game platformer. Beberapa ide fitur lanjutan terkait pergerakan karakter di game platformer:
 
@@ -25,9 +27,9 @@ Silakan pilih fitur lanjutan yang ingin dikerjakan. Kemudian jelaskan proses pen
 
 ---
 
-# Proses Pengerjaan
+## Proses Pengerjaan
 
-## Double Jump
+### Double Jump
 
 Sebelumnya telah terimplementasi fitur lompat dengan kode sebagai berikut.
 
@@ -59,7 +61,7 @@ func get_input():
       can_double_jump = false   # update var ke false
 ```
 
-## Dashing
+### Dashing
 
 Dikarenakan belum ada _acction key_ untuk dash, perlu ditambahkan pada `Project Settings... > Input Map`. Dalam lab ini ditambahkan _action key_ **ui_dash** dengan input tombol _Shift_ pada keyboard.
 
@@ -78,7 +80,7 @@ func get_input():
 
 Diletakkan dibawah kode supaya `velocity.x` sudah terupdate ketika pemain menggerakkan `Player` ke kanan maupun kekiri yang dimana akan di*multiplier* sehingga `Player` bergerak makin cepat.
 
-## Crouching
+### Crouching
 
 _Action key_ yang digunakan untuk **crouching** adalah tombol _down_. Implemetasi dilakukan pada conditional `is_on_floor` yang telah digunakan sebelumnya untuk mengupdate nilai `can_double_jump`.
 
@@ -99,11 +101,11 @@ Sebagai penanda `Player` _crouching_, digunakan _frame_ dari gambar yg telah dis
 
 Berdasarkan gambar yang disediakan, _frame_ 3 merupakan _frame_ jongkok. _Frame_ akan diganti ke 3 ketika pemain menekan tombol _down_ dan dikembalikan ke frame semula ketika pemain melepas tombol _down_. Pergantian ini terjadi ketika `Player` menyentuh lantai sebagai kondisi awal dari _crouching_.
 
-## Animation
+### Animation
 
 Reference : [Learn How To Use The Godot Animation Player In Less Than 5 Minutes](https://www.youtube.com/watch?v=ATfE4k6EP9U&t=58s)
 
-### Implementasi Animation
+#### Implementasi Animation
 
 Implementasi menggunakan `AnimationPlayer` untuk menyimpan animasi dari `Sprite` yang digunakan. Animasi yang dibuat adalah
 
@@ -188,7 +190,7 @@ func update_animation():
 		$Sprite.flip_h = true
 ```
 
-### Update: implementasi jump
+#### Update: implementasi jump
 
 Animasi `jump` diimplementasi menjadi dua jenis animasi, `jump_up` dan `jump_down`. Animasi dibedakan untuk membuatnya lebih detail. Sehingga tidak hanya animasi `jump` saja, namun juga dapat digunakan sebagai animasi `fall`.
 
@@ -215,7 +217,7 @@ func update_animation():
   //
 ```
 
-## Update: Fix Dash Animation
+### Update: Fix Dash Animation
 
 **Before:**
 
@@ -239,7 +241,7 @@ func update_animation():
 
 ---
 
-# Change Sprite Texture
+## Change Sprite Texture
 
 Reference: [How to change the image/texture of a sprite when it enters a specific area](https://forum.godotengine.org/t/how-to-change-the-image-texture-of-a-sprite-when-it-enters-a-specific-area/3590)
 
@@ -281,7 +283,7 @@ Ketika pemain menekan key "F", `Sprite` dari `Player` akan digantikan dengan _te
 
 ---
 
-# Restart Position
+## Restart Position
 
 Reference: (position in center of screen)[https://forum.godotengine.org/t/position-in-center-of-screen/20171]
 
@@ -296,7 +298,7 @@ func _process(delta):
 
 Var `position` dari `Player` akan terupdate dengan posisi tepat di tengah layar game ketika pemain menekan tombol `Restart`.
 
-## Update: Refactor Implementasi Fitur
+### Update: Refactor Implementasi Fitur
 
 Implementasi fitur `restart position` dipindahkan ke _script_ `Main.gd`. Alasannya adalah sebelumnya pada `Player.gd`, dilakukan pemanggilan `get_parent()` untuk mengambil _node_ parentnya yang kemudian dilanjutkan dengan pengambilan `get_viewport_rect().size`. Implementasi ini tidak fleksibel karena posisi hanya dapat diubah ke tengah _screen_. Dengan dipindahkannya ke `Main.gd` memungkinkan posisi reset `Player` berbeda untuk setiap level yang ditempatinya.
 
@@ -311,7 +313,7 @@ func reset_player_position():
 	player.position = get_viewport_rect().size / 2.0
 ```
 
-## Update: Use `Camera` as Mid-view
+### Update: Use `Camera` as Mid-view
 
 Setelah berpikir panjang untuk penempatan reset posisi `Player`, dicoba menggunakan _node_ `Camera`. _Node_ tersebut dapat digunakan untuk menjadi _main view_ dari game yang dibuat. Nantinya, _node_ `Camera` tersebut dapat diatur untuk mengikuti gerakan `Player`, dikarenakan atribut `position` dari `Player` akan selalu berubah ketika digerakkan (bisa update `position` dari `Camera` dengan `position` dari `Player`).
 
@@ -325,7 +327,7 @@ func _process(delta):
 
 ---
 
-# Tambahan
+## Tambahan
 
 Untuk menyesuaikan dengan CI/CD dari github, terdapat beberapa perubahan pada kodingan.
 
@@ -362,6 +364,97 @@ func _ready():
 	player = get_node("Player")
 ```
 
-## Last Update's Note
+### Last Update's Note
 
 Doesn't seem to be working
+
+---
+
+---
+
+# Tutorial 5
+
+## Upgrade AnimationPlayer Code
+
+Implementasi yang ada di tutorial merupakan implementasi yang lebih baik dikarenakan fungsi `AnimationPlayer.play()` tidak akan dijalankan terus menerus.
+
+```
+var animation : String = 'idle'
+
+func update_animation():
+	if is_on_floor():
+		if Input.is_action_pressed("ui_crouch"):
+			animation = "crouch"
+		elif direction != Vector2.ZERO:
+			animation = "walk"
+		else:
+			animation = "idle"
+	else:
+		if velocity.y < 0:
+			animation = "jump_up"
+		else:
+			animation = "jump_down"
+
+	if Input.is_action_pressed("ui_dash") and direction.x != 0:
+		animation = "dash"
+
+	if Input.is_action_pressed("ui_right"):
+		player_sprite.flip_h = false
+	elif Input.is_action_pressed("ui_left"):
+		player_sprite.flip_h = true
+
+	if animation_player.current_animation != animation:
+		animation_player.play(animation)
+```
+
+## TODO
+
+update `Sprite` to `AnimationSprite`
+
+---
+
+## Latihan Mandiri: Membuat dan Menambah Variasi Aset
+
+Silakan eksplorasi lebih lanjut mengenai animasi berdasarkan spritesheet dan audio. Untuk latihan mandiri yang dikerjakan di akhir tutorial, kamu diharapkan untuk:
+
+-   [ ] Membuat minimal 1 (satu) objek baru di dalam permainan yang dilengkapi dengan animasi menggunakan spritesheet selain yang disediakan tutorial. Silakan cari spritesheet animasi di beberapa koleksi aset gratis seperti Kenney.
+
+-   [ ] Membuat minimal 1 (satu) audio untuk efek suara (SFX) dan memasukkannya ke dalam permainan. Kamu dapat membuatnya sendiri atau mencari dari koleksi aset gratis.
+
+-   [ ] Membuat minimal 1 (satu) musik latar (background music) dan memasukkannya ke dalam permainan. Kamu dapat membuatnya sendiri atau mencari dari koleksi aset gratis.
+
+-   [ ] Implementasikan interaksi antara objek baru tersebut dengan objek yang dikendalikan pemain. Misalnya, pemain dapat menciptakan atau menghilangkan objek baru tersebut ketika menekan suatu tombol atau tabrakan dengan objek lain di dunia permainan.
+
+-   [ ] Implementasikan audio feedback dari interaksi antara objek baru dengan objek pemain. Misalnya, muncul efek suara ketika pemain tabrakan dengan objek baru.
+
+Beberapa ide lain yang bisa kamu coba kerjakan di luar latihan mandiri:
+
+-   [ ] Implementasi sistem audio yang relatif terhadap posisi objek. Misalnya, musik latar akan semakin terdengar samar ketika pemain semakin jauh dari posisi awal level.
+
+Silakan berkreasi lebih lanjut untuk membuat Tutorial 3 dan 5 kamu lebih menarik dari sebelumnya!
+Jangan lupa untuk menjelaskan proses pengerjaan tutorial ini di dalam berkas `README.md` yang sama dengan Tutorial 3. Silakan tambahkan subbab (_section_) baru yang berisi penjelasan proses pengerjaan Tutorial 5.
+Cantumkan juga referensi-referensi yang digunakan sebagai acuan ketika menjelaskan proses implementasi.
+
+---
+
+### Pembuatan Objek Baru Beserta dengan Animasinya
+
+---
+
+### Penambahan Musik Latar
+
+---
+
+### Interaksi Antara Objek dan Pemain
+
+IDE: Koin
+
+---
+
+### Audio Feedback dari Interaksi Antara Objek dan Pemain
+
+Sumber audio: https://freesound.org/people/ProjectsU012/sounds/341695/
+
+---
+
+### Implementasi Audio yang relatif terhadap posisi Pemain (OPTIONAL)

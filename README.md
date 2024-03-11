@@ -426,7 +426,7 @@ Silakan eksplorasi lebih lanjut mengenai animasi berdasarkan spritesheet dan aud
 
 -   [ ] Membuat minimal 1 (satu) objek baru di dalam permainan yang dilengkapi dengan animasi menggunakan spritesheet selain yang disediakan tutorial. Silakan cari spritesheet animasi di beberapa koleksi aset gratis seperti Kenney.
 
--   [ ] Membuat minimal 1 (satu) audio untuk efek suara (SFX) dan memasukkannya ke dalam permainan. Kamu dapat membuatnya sendiri atau mencari dari koleksi aset gratis.
+-   [x] Membuat minimal 1 (satu) audio untuk efek suara (SFX) dan memasukkannya ke dalam permainan. Kamu dapat membuatnya sendiri atau mencari dari koleksi aset gratis.
 
 -   [ ] Membuat minimal 1 (satu) musik latar (background music) dan memasukkannya ke dalam permainan. Kamu dapat membuatnya sendiri atau mencari dari koleksi aset gratis.
 
@@ -456,11 +456,41 @@ Cantumkan juga referensi-referensi yang digunakan sebagai acuan ketika menjelask
 
 IDE: Koin
 
+Buat satu _scene_ baru dengan struktur _tree_ sebagai berikut.
+
+```
+Coin (Node2D)
+| - AnimationSprite (animasi dari objek Coin)
+| - Area2D (collision dengan pemain)
+| | - CollisionShape2D
+| - AnimationPlayer
+| - AudioStreamPlayer
+```
+
+Implementasi dilakukan dengan membuat satu animasi koin pada `AnimationPlayer` dan mengkoneksikan fungsi `body_entered()`.
+Isi dari fungsi `body_entered()` hanya digunakan untuk memanggil animasi pada `AnimationPlayer`.
+
+```
+func _on_Area2D_body_entered(body):
+	if body.name == "Player":
+		$AnimationPlayer.play("coin")
+```
+
+Untuk isi dari `AnimationPlayer` adalah seperti berikut.
+
+![coin animation player](pics\coin_animation_player.png)
+
+Berdasarkan pada pengerjaan **Tutorial 4**, telah dilakukan percobaan untuk menghilangkan objek `FallingFish` via `AnimationPlayer`.
+Percobaan tersebut dilakukan kembali pada kasus menghilangkan koin.
+Selain itu, untuk memberikan efek suara koin terambil, ditambahkan `AudioStreamPlayer` dari opsi `Audio Playback Track` yang tersedia di `AnimationPlayer`.
+
 ---
 
 ### Audio Feedback dari Interaksi Antara Objek dan Pemain
 
 Sumber audio: https://freesound.org/people/ProjectsU012/sounds/341695/
+
+Proses implementasi sudah dijelaskan di atas.
 
 ---
 

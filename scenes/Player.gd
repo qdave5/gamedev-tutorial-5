@@ -66,7 +66,10 @@ func update_animation():
 			animation = "idle"
 	else:
 		if velocity.y < 0:
-			animation = "jump_up"
+			if can_double_jump:
+				animation = "jump_up"
+			else:
+				animation = "double_jump"
 		else:
 			animation = "jump_down"
 	

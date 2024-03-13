@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/アトリエと電脳世界_2.mp3-6bffd93a12352bfc38f189c0c1d2117f.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/アトリエと電脳世界_2.mp3"
+dest_files=[ "res://.import/アトリエと電脳世界_2.mp3-6bffd93a12352bfc38f189c0c1d2117f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

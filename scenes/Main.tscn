@@ -19,7 +19,8 @@ margin_top = -69.0
 margin_right = -111.0
 margin_bottom = -29.0
 text = "Press \"F\" to change Player texture.
-Press \"R\" to restart Player position."
+Press \"R\" to restart Player position.
+Press \"G\" to change music."
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

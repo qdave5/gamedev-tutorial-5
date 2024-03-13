@@ -446,9 +446,44 @@ Cantumkan juga referensi-referensi yang digunakan sebagai acuan ketika menjelask
 
 ### Pembuatan Objek Baru Beserta dengan Animasinya
 
+Pada _scene_ `Coin`, digunakan `AnimationSprite` untuk membuat animasinya. Sederhananya, pada bagian `AnimationSprite` dibuat sebuah `SpriteFrame` dan menambahkan dua (2) buah _frame_ untuk memperlihatkan bahwa koin berputar.
+
+![coin animation sprite](pics\coin_animation_sprite.png)
+
+Untuk membuat animasi `Coin` dapat dimainkan ketika pertama kali dibuka, _check_ true pada atribut `playing`.
+
 ---
 
 ### Penambahan Musik Latar
+
+Resource: https://www.youtube.com/watch?v=4a4hwDRKBJU
+
+Pertama, aset background ditambahkan terlebih dahulu kedalam project. Kemudian, ditambahkan Input Mapping dengan kunci "G" untuk interaksi ubah _background music_. Lalu, dibuat fungsi ubah lagu pada _script_ `Main`.
+
+```
+var currMusic = 0
+var musicList = [
+	preload("res://assets/sound/bgm.wav"),
+	preload("res://assets/sound/アトリエと電脳世界_2.mp3")
+]
+
+onready var audioStreamPlayer = get_node("AudioStreamPlayer2D")
+
+func _process(delta):
+	//
+	if Input.is_action_just_pressed("ui_music"):
+		change_music()
+
+func change_music():
+	currMusic += 1
+	if currMusic >= musicList.size():
+		currMusic = 0
+
+	audioStreamPlayer.stream = musicList[currMusic]
+	audioStreamPlayer.play(0)
+```
+
+Fungsi diatas akan membuat _background music_ berubah. Perlu ditambahkan `audioStreamPlayer.play(0)` dikarenakan _background music_ akan berhenti dimainkan ketika diganti dengan musik yang lain.
 
 ---
 

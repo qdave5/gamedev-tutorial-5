@@ -456,7 +456,7 @@ Untuk membuat animasi `Coin` dapat dimainkan ketika pertama kali dibuka, _check_
 
 ### Penambahan Musik Latar
 
-Resource: https://www.youtube.com/watch?v=4a4hwDRKBJU
+Sumber audio: https://www.youtube.com/watch?v=4a4hwDRKBJU
 
 Pertama, aset background ditambahkan terlebih dahulu kedalam project. Kemudian, ditambahkan Input Mapping dengan kunci "G" untuk interaksi ubah _background music_. Lalu, dibuat fungsi ubah lagu pada _script_ `Main`.
 
@@ -530,3 +530,14 @@ Proses implementasi sudah dijelaskan di atas.
 ---
 
 ### Implementasi Audio yang relatif terhadap posisi Pemain (OPTIONAL)
+
+Sumber audio: https://freesound.org/people/InspectorJ/sounds/339326/
+
+References: https://forum.godotengine.org/t/audiostreamplayer2d-changing-volume-based-off-distance-to-0-0-not-to-screen-center/5232
+
+Implementasi dilakukan dengan membuat sebuah _object scene_ baru yaitu `NoisyBird`. Berdasarkan sumber referensi, `AudioStreamPlayer2D` sudah mengimplementasikan fungsi relatif suara terhadap jarak dengan tengah layar.
+Maka, implementasi yang dilakukan adalah dengan mengatur `MaxDistance` pada atribut `AudioStreamPlayer2D` menjadi 200.
+
+![noisybird_audio_stream_player_setting](pics/noisybird_audio_stream_player_setting.png)
+
+Pada saat dijalankan, `Player` hanya dapat mendengar suara kicauan burung ketika berada di dekat objek `NoisyBird`
